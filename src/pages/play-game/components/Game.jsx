@@ -245,6 +245,7 @@ export const Game = () => {
         } else {
             console.log("cardflip", previouslyClickedIcon.id, data.id)
             if (previouslyClickedIcon.id !== data.id) {
+                disableOrEnableAllCards(true);
                 componentInstance.flip();
                 const prevChilRef = childRefs.current[previouslyClickedIcon.id].childRef();
                 const currentChilRef = childRefs.current[data.id].childRef();
@@ -259,9 +260,11 @@ export const Game = () => {
                             prevChilRef.current.classList.remove('flip-card-error')
                             currentChilRef.current.classList.remove('flip-card-error')
                             setPreviouslyClickedIcon(null);
+                            disableOrEnableAllCards(false);
                         }, 250);
                     }, 250);
                 } else {
+                    
                     setTimeout(() => {
                         prevChilRef.current.classList.add('flip-card-success')
                         currentChilRef.current.classList.add('flip-card-success')
@@ -271,6 +274,9 @@ export const Game = () => {
                             prevChilRef.current.classList.remove('flip-card-success');
                             currentChilRef.current.classList.remove('flip-card-success');
                             setPreviouslyClickedIcon(null);
+                            disableOrEnableAllCards(false);
+                            childRefs.current[previouslyClickedIcon.id].onCorrect();
+                            childRefs.current[data.id].onCorrect();
                         }, 500);
                     }, 250)
                     setMatchedflipCount(prev => prev + 1);
@@ -283,6 +289,12 @@ export const Game = () => {
         setShowHint(prev => !prev);
         Object.keys(childRefs.current).forEach(key => {
             childRefs.current[key].showHint();
+        })
+    }
+
+    const disableOrEnableAllCards = (state) => {
+        Object.keys(childRefs.current).forEach(key => {
+            childRefs.current[key].disableEnableCard(state);
         })
     }
 

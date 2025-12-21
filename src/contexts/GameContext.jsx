@@ -9,6 +9,7 @@ export const GameProvider = ({ children }) => {
     const [gameSuccess, setGameSuccess] = useState(false);
     const [playPause, setPlayPause] = useState(false);
     const [escaped, setEscaped] = useState(false);
+    const [enableOrDisable, setEnableOrDisable] = useState(false);
 
     const value = {
         userName,
@@ -22,7 +23,9 @@ export const GameProvider = ({ children }) => {
         playPause, 
         setPlayPause,
         escaped,
-        setEscaped
+        setEscaped,
+        enableOrDisable,
+        setEnableOrDisable
     };
 
     return (

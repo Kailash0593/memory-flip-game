@@ -24,17 +24,28 @@ export const FlipCard = forwardRef(({ data, flipped, isInCorrect, isCorrect, onC
     setIsCorrect(isCorrect);
   }, [isCorrect])
 
+  const onCorrect = () => {
+    setIsCorrect(true);
+  }
+
+  const disableEnableCard = (state) => {
+    setIsDisabled(state);
+  }
+
   const flip = () => {
     setCurrentFlip(prev => !prev);
   }
 
   const onClick = () => {
-    if(!isDisabled){
+    console.log("onClick", !isDisabled , !isCorrect)
+    if(!isDisabled && !isCorrect){
       onCardClick(data)
     }
   }
 
   useImperativeHandle(ref, () => ({
+    onCorrect: onCorrect,
+    disableEnableCard: disableEnableCard,
     flip: flip,
     childRef: () => childRef,
     showHint: () => {
